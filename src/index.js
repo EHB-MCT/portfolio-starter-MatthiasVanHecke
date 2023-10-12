@@ -38,6 +38,18 @@ app.get('/artworks', (req, res) => {
       .catch((error) => res.status(500).json({ error }));
   });
 
+// Update an artwork
+app.put('/artworks/:id', (req, res) => {
+    const { title, artist_id, image_url, location } = req.body;
+    const id = req.params.id;
+  
+    db('artworks')
+        .where({ id })
+        .update({ title, artist_id, image_url, location })
+        .then(() => res.send('Artwork updated successfully'))
+        .catch((error) => res.status(500).json({ error }));
+  });
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
