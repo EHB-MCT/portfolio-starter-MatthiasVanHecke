@@ -7,6 +7,15 @@ const app = express();
 const db = knex(knexConfig.development);
 app.use(bodyParser.json());
 
+// Create a new artwork
+app.post('/artworks', (req, res) => {
+    const { title, artist_id, image_url, location } = req.body;
+    db('artworks')
+      .insert({ title, artist_id, image_url, location })
+      .then(() => res.status(201).send('Artwork created successfully'))
+      .catch((error) => res.status(500).json({ error }));
+  });
+
 // Read One
 app.get('/artworks/:id', async (req, res) => {
     const id = req.params.id;  
