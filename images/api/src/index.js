@@ -1,17 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const knex = require('knex');
-const knexConfig = require('./knexfile');
+const knexConfig = require('./db/knexfile');
 
 const app = express();
 const db = knex(knexConfig.development);
 app.use(bodyParser.json());
 
+
 // Create a new artwork
 app.post('/artworks', (req, res) => {
-    const { title, artist_id, image_url, location } = req.body;
+    const { title, artist_uuid, image_url, location } = req.body;
     db('artworks')
-      .insert({ title, artist_id, image_url, location })
+      .insert({ title, artist_uuid, image_url, location })
       .then(() => res.status(201).send('Artwork created successfully'))
       .catch((error) => res.status(500).json({ error }));
   });
@@ -40,12 +41,12 @@ app.get('/artworks', (req, res) => {
 
 // Update an artwork
 app.put('/artworks/:id', (req, res) => {
-    const { title, artist_id, image_url, location } = req.body;
+    const { title, artist_uuid, image_url, location } = req.body;
     const id = req.params.id;
   
     db('artworks')
         .where({ id })
-        .update({ title, artist_id, image_url, location })
+        .update({ title, artist_uuid, image_url, location })
         .then(() => res.send('Artwork updated successfully'))
         .catch((error) => res.status(500).json({ error }));
   });
