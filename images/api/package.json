@@ -1,0 +1,29 @@
+{
+  "name": "portfolio-starter-matthiasvanhecke",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js --legacy-watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EHB-MCT/portfolio-starter-MatthiasVanHecke.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EHB-MCT/portfolio-starter-MatthiasVanHecke/issues"
+  },
+  "homepage": "https://github.com/EHB-MCT/portfolio-starter-MatthiasVanHecke#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "knex": "^3.0.1",
+    "ngeohash": "^0.6.3",
+    "nodemon": "^3.0.1",
+    "pg": "^8.11.3"
+  }
+}
