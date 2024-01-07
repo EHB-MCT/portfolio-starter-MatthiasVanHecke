@@ -21,7 +21,7 @@ beforeAll(async () => {
     insertedArtist = await knex('artists').insert(exampleArtist).returning('*')
 
     exampleArtwork = {
-        title: 'De Schreeuw',
+        title: 'De Sterrennacht',
         artist_uuid: insertedArtist[0].uuid,
         image_url: 'https://example.com/De_Sterrennacht.png',
         location: 'm8dlkjlJlfmqslK02',
@@ -42,7 +42,6 @@ afterAll(async () => {
 describe('DELETE /artists/:id', () => {
     test('error 400 if negative ID provided', async () => {
         const response = await request(app).delete('/artists/-1')
-        console.log(response.body)
         expect(response.status).toBe(400)
         expect(response.body.error).toBe('An invalid ID was provided')
     })
