@@ -2,7 +2,7 @@ exports.up = function(knex) {
     return knex.schema.createTable("artists", function (table) {
         table.increments("id").primary()
         table.string("artist_name")
-        table.uuid("uuid")
+        table.string("uuid")
         table.string("nationality")
         table.integer("birthyear")
     })

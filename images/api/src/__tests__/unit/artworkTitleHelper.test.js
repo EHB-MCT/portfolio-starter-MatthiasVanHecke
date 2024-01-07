@@ -1,4 +1,4 @@
-const {checkArtworkTitle} = require("../helpers/artworkTitleEndpointHelper")
+const {checkArtworkTitle} = require("../../helpers/artworkEndpointHelper.js")
 
 test("return false when artwork title check has invalid inputs", () => {
     //when input is empty

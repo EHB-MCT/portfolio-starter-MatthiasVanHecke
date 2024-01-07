@@ -1,4 +1,4 @@
-const { checkArtworkImage } = require("../helpers/artworkImageEndpointHelper");
+const { checkArtworkImage } = require("../../helpers/artworkEndpointHelper");
 
 test("return false when artwork image check has invalid inputs", () => {
     //when input is empty

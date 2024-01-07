@@ -1,4 +1,4 @@
-const { checkArtworkLocation } = require("../helpers/artworkLocationEndpointHelper");
+const { checkArtworkLocation } = require("../../helpers/artworkEndpointHelper.js");
 
 test("return false when artwork location check has invalid inputs", () => {
     //when input is empty

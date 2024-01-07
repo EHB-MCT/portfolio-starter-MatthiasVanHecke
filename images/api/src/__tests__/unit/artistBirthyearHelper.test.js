@@ -1,4 +1,4 @@
-const {checkArtistBirthyear} = require("../helpers/artistBirthyearEndpointHelper")
+const {checkArtistBirthyear} = require("../../helpers/artistEndpointHelper")
 
 test("return false when birthyear check has invalid inputs", () => {
     //when input is empty

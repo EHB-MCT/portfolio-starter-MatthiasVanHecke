@@ -1,4 +1,4 @@
-const {checkArtistName} = require("../helpers/artistNameEndpointHelper")
+const {checkArtistName} = require("../../helpers/artistEndpointHelper")
 
 test("return false when name check has invalid inputs", () => {
     //when input is empty
