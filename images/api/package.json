@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js --legacy-watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,10 @@
     "knex": "^3.0.1",
     "ngeohash": "^0.6.3",
     "nodemon": "^3.0.1",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
