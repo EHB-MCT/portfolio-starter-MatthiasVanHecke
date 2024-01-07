@@ -8,7 +8,7 @@ To get started with the project, follow these steps:
 1. Copy the `.env.template` file to a new file called `.env`.
 2. Run the following command to build and start the project using Docker Compose:
 ```
-docker-compose up --build
+docker-compose -f docker-compose.test.yml up --build
 ```
 ## Status
 The project is currently in development.

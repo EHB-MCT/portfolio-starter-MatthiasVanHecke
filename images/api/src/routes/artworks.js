@@ -4,9 +4,9 @@ const bodyParser = require('body-parser')
 const knex = require('knex')
 const { v4: uuidv4 } = require('uuid')
 
-const { checkArtworkTitle } = require('../helpers/artworkTitleEndpointHelper')
-const { checkArtworkImage } = require('../helpers/artworkImageEndpointHelper')
-const { checkArtworkLocation } = require('../helpers/artworkLocationEndpointHelper')
+const { checkArtworkTitle } = require('../helpers/artworkEndpointHelper')
+const { checkArtworkImage } = require('../helpers/artworkEndpointHelper')
+const { checkArtworkLocation } = require('../helpers/artworkEndpointHelper')
 
 const knexConfig = require('./../db/knexfile')
 
@@ -69,7 +69,7 @@ router.get('/:id', async (req, res) => {
 
 // Update an artwork
 router.put('/:id', async (req, res) => {
-  const { title, artist_uuid, image_url, location } = req.body
+  const { title, artist_uuid, image_url, location_geohash } = req.body
   const id = req.params.id
 
   if (!Number.isInteger(Number(id))) {
@@ -85,7 +85,7 @@ router.put('/:id', async (req, res) => {
 
     await db('artworks')
       .where({ id })
-      .update({ title, artist_uuid, image_url, location })
+      .update({ title, artist_uuid, image_url, location_geohash })
 
     return res.status(200).send('Artwork updated successfully')
   } catch (error) {

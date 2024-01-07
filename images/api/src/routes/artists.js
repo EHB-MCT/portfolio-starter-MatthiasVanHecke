@@ -6,20 +6,22 @@ const db = knex(knexConfig.development)
 
 // Create a new artist
 router.post('/', (req, res) => {
-    const { artistName, uuid, birthyear } = req.body
+    const { artist_name, uuid, birthyear } = req.body
 
-    if (!artistName || !uuid || !birthyear) {
+    if (!artist_name || !uuid || !birthyear) {
         return res.status(400).json({ error: 'Missing some fields. Please fill these in.' })
     }
 
     db('artists')
-        .insert({ artistName, uuid, birthyear })
+        .insert({ artist_name, uuid, birthyear })
         .returning('*')
         .then((data) => {
             const artist = data[0]
             return res.status(200).json({
                 message: 'Artist created successfully!',
-                artist,
+                artist_uuid: artist.uuid,
+                image_url: "https://example.com/De_sterrennacht.png",
+                location_geohash: "m8dlkjlJlfmqslK02"
             })
         })
         .catch((error) => {
@@ -57,7 +59,7 @@ router.get('/', (req, res) => {
 
 // Update an artist
 router.put('/:id', async (req, res) => {
-    const { artistName, uuid, birthyear } = req.body
+    const { artist_name, uuid, birthyear } = req.body
     const id = req.params.id
 
     // Check if ID is valid
@@ -68,13 +70,13 @@ router.put('/:id', async (req, res) => {
     // Check if artist exists
     const existingArtist = await db('artists').where({ id }).first()
     if (!existingArtist) {
-        return res.status(404).json({ error: 'Artist not found' })
+        return res.status(400).json({ error: 'An invalid ID was provided' })
     }
 
     db('artists')
         .where({ id })
-        .update({ artistName, uuid, birthyear })
-        .then(() => res.send('Artist updated successfully'))
+        .update({ artist_name, uuid, birthyear })
+        .then(() => res.send('Artist updated successfully!'))
         .catch((error) => res.status(500).json({ error }))
 })
 
@@ -83,8 +85,8 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id
 
     // Check if ID is valid
-    if (id < 0) {
-        return res.status(400).json({ error: 'Provided ID is invalid' })
+    if (id < 0 || !Number.isInteger(Number(id))) {
+        return res.status(400).json({ error: 'An invalid ID was provided' })
     }
 
     try {
@@ -93,9 +95,10 @@ router.delete('/:id', async (req, res) => {
             return res.status(404).json({ error: 'Artist not found' })
         }
         await db('artists').where({ id }).del()
-        return res.send('Artist deleted successfully!')
+        return res.status(204).json({ message: 'Artist deleted successfully' })
     } catch (error) {
-        return res.status(500).json({ error })
+        console.error('Delete Artist Error:', error)
+        return res.status(500).json({ error: 'Internal server error' })
     }
 })
 
