@@ -21,7 +21,7 @@ describe('POST /artists/:id', () => {
       await knex('artists').insert({ ...exampleArtist })
 
       exampleArtwork = {
-        title: 'De Schreeuw',
+        title: 'De Sterrennacht',
         artist_uuid: exampleArtist.uuid,
         image_url: 'https://example.com/De_Sterrennacht.png',
         location: 'm8dlkjlJlfmqslK02',

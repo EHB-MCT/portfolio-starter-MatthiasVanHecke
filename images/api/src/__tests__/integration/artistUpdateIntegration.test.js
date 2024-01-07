@@ -22,7 +22,7 @@ describe('UPDATE /artists/:id', () => {
       insertedArtist = await knex('artists').insert(exampleArtist).returning('*')
 
       exampleArtwork = {
-        title: 'De Schreeuw',
+        title: 'De Sterrennacht',
         artist_uuid: insertedArtist[0].uuid,
         image_url: 'https://example.com/De_Sterrennacht.png',
         location: 'm8dlkjlJlfmqslK02',

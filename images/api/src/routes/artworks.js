@@ -15,7 +15,12 @@ const db = knex(knexConfig.development)
 // Create a new artwork
 router.post('/', async (req, res) => {
   try {
-    const { title, image_url, location_geohash } = req.body
+    const { title, image_url, location } = req.body
+
+    if (!title || !image_url || !location) {
+      // Return 400 if any required field is missing
+      return res.status(400).json({ error: 'Invalid data. Title, image_url, and location are required.' })
+    }
 
     // Generate a UUID for the artist
     const artist_uuid = uuidv4()
@@ -25,8 +30,8 @@ router.post('/', async (req, res) => {
 
     // Insert the artwork into the "artworks" table
     const insertedData = await db('artworks')
-      .insert({ title, artist_uuid, image_url, location_geohash })
-      .returning(['id', 'title', 'artist_uuid', 'image_url', 'location_geohash'])
+      .insert({ title, artist_uuid, image_url, location })
+      .returning(['id', 'title', 'artist_uuid', 'image_url', 'location'])
 
     const insertedArtwork = insertedData[0]
 
@@ -69,7 +74,7 @@ router.get('/:id', async (req, res) => {
 
 // Update an artwork
 router.put('/:id', async (req, res) => {
-  const { title, artist_uuid, image_url, location_geohash } = req.body
+  const { title, artist_uuid, image_url, location } = req.body
   const id = req.params.id
 
   if (!Number.isInteger(Number(id))) {
@@ -85,7 +90,7 @@ router.put('/:id', async (req, res) => {
 
     await db('artworks')
       .where({ id })
-      .update({ title, artist_uuid, image_url, location_geohash })
+      .update({ title, artist_uuid, image_url, location })
 
     return res.status(200).send('Artwork updated successfully')
   } catch (error) {
@@ -98,9 +103,9 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', (req, res) => {
   const artworkId = req.params.id
 
-  if (isNaN(artworkId) || artworkId < 0 || artworkId >= 9999999) {
+  if (isNaN(artworkId) || artworkId < 0 || artworkId >= 10000000) {
     // Invalid ID provided
-    return res.status(400).json({ error: 'Invalid ID provided' })
+    return res.status(400).json({ error: 'An invalid ID was provided' })
   }
 
   db('artworks')
